@@ -111,7 +111,7 @@ def reports():
         db_output = cursor.fetchall()
         # converting to list to pass the data to html
         report = list(db_output) if list(db_output) else []  
-        reported = report[-1][0] if len(report) else 0  
+        reported = report[-1][0] if report else 0  
         counter_data(total=total,phishing=phishing,safe_site=safe_site,reported=reported,mode='w')
         return render_template("reports.html",head=header,reports=report,counterdata=counter) # header for column names and reports for rows/site data
     except Exception as e:
