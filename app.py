@@ -88,10 +88,9 @@ def check():
                 phishing += 1
                 counter_data(total,phishing,safe_site,'w')
                 return redirect('/phishing') # Redirects to It is  PHISHING SITE
-            else:
-                safe_site += 1
-                counter_data(total,phishing,safe_site,'w')
-                return redirect('/safe') # Redirects to It is SAFE SITE
+            safe_site += 1
+            counter_data(total,phishing,safe_site,'w')
+            return redirect('/safe') # Redirects to It is SAFE SITE
         return redirect('/') # Redirects to home page if values are not entered
 
 # reports page
@@ -171,13 +170,12 @@ def api():
                 counter_data(total,phishing,safe_site,'w')
                 mysqldata_insert(seurl,inurl) # To adding data to the database
                 return jsonify({'Input Url':inurl,'Orginal Url':seurl,'Phishing Site':output,'Data Saved':bool(store),'Region':country}) # API response with data saved information
-            else:
-                safe_site += 1
-                counter_data(total,phishing,safe_site,'w')
-                return jsonify({'Input Url':inurl,'Orginal Url':seurl,'Phishing Site':output,'Data Saved':bool(store),'Region':country}) # API response with data saved information
+            safe_site += 1
+            counter_data(total,phishing,safe_site,'w')
+            return jsonify({'Input Url':inurl,'Orginal Url':seurl,'Phishing Site':output,'Data Saved':bool(store),'Region':country}) # API response with data saved information
         return jsonify({'Input Url':inurl,'Orginal Url':seurl,'Phishing Site':output,'Region':country}) # API response if values are not saved
     return render_template('api.html') # Redirecting to reports page to show that changes were made successfully
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
