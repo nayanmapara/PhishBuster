@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col">
+   <div align='left'>
+      <p>Add a Phishing site manually:<button type="button" class="btn btn-success float-right" data-toggle="modal"
+            data-target="#manualadd">Add</button></p>
+   </div>
+   <table class="table table-hover table-dark">
+      <thead>
+         <tr>
+            {% for h in head %}
+            <th scope="col">{{ h }}</th>
+            {% endfor %}
+         </tr>
+      </thead>
+      <tbody>
+         {% for row in reports %}
+         <tr>
+            {% for cell in row %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+            <td>
+               <a href="https://safebrowsing.google.com/safebrowsing/report_phish/?url={{row[2]}}"
+                  class="btn btn-warning btn-xs">Report</a>
+               <a href="/delete/{{row[0]}}" class="btn btn-danger btn-xs" name="deletebtn"
+                  onclick="return confirm('Click OK to confirm delete.')">Delete</a>
+            </td>
+         </tr>
+         {% endfor %}
+      </tbody>
+   </table>
+   <div id="manualadd" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+         <div class="modal-content">
+            <div class="modal-header table-dark">
+               <h4 class="modal-title">Manual Add</h4>
+            </div>
+            <div class="modal-body table-dark">
+               <form action="{{url_for('manualadd')}}" method="POST">
+                  <div class="form-group">
+                     <label>Orginal URL:</label>
+                     <input type="text" class="form-control" name="org" required="1">
+                  </div>
+                  <div class="form-group">
+                     <label>Phishing Site URL:</label>
+                     <input type="url" class="form-control" name="phish" required="1">
+                  </div>
+                  <div class="form-group">
+                     <button class="btn btn-primary" type="submit">Add</button>
+                  </div>
+               </form>
+            </div>
+            <div class="modal-footer table-dark">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+{% endblock %}

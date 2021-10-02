@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-md-10 mx-auto">
+    <h1>PhishBuster</h1>
+    <form action={{url_for('check')}} method="POST">
+        <div class="form-group ">
+            <!-- To take url input from the user -->
+            <center><input class="form-control col-7 rounded" placeholder='ENTER THE SUSPECTED URL' type="url"
+                    name="inurl" required="1"></center>
+        </div>
+        <div class="form-group">
+            <center>
+                <select name="seurl" class='form-control col-7 rounded'>
+                    <!-- For showing values in drop down menu -->
+                    {% for u in selecturl %}
+                    <option class='text-light bg-dark' value={{u[1]}}>{{u[0]}}</option>
+                    {% endfor %}
+                </select>
+            </center>
+        </div>
+        <div class="form-group">
+            <center>
+                <select name="country" class='form-control col-7 rounded'>
+                    <!-- For showing values in drop down menu -->
+                    {% for c in countrydata %}
+                    <option class='text-light bg-dark' value={{c[1]}}>{{c[0]}}</option>
+                    {% endfor %}
+                </select>
+            </center>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg btn-default">Start Scan</button>
+        <button type="button" class="btn btn-primary btn-lg btn-default" data-toggle="modal"
+            data-target="#needhelp">Need Help</button>
+    </form>
+    <div id="needhelp" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header table-dark">
+                    <h4 class="modal-title">How to use:</h4>
+                </div>
+                <div class="modal-body table-dark">
+                    <div class="no-gutters" align="left">
+                        <ol>
+                            <li>
+                                <p>In the input box enter suspected url.</p>
+                            </li>
+                            <li>
+                                <p>In the select box choose the site/page which the suspected url is trying to
+                                    represent.</p>
+                            </li>
+                            <li>
+                                <p>In the countries box select the country you are currently in.</p>
+                            </li>
+                        </ol>
+                        <strong>Note: </strong>If there is no option for the site then create an issue on Github and
+                        we
+                        will add it soon.
+                    </div>
+                </div>
+                <div class="modal-footer table-dark">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

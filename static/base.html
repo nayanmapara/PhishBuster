@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>PhishBuster</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cabin:700">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/fonts/font-awesome.min.css') }}">
+    <!-- jQuery Library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Counts JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Counter-Up/1.0.0/jquery.counterup.min.js"></script>
+</head>
+
+<body id="page-top">
+    <nav class="navbar navbar-light navbar-expand-md fixed-top" id="mainNav">
+        <div class="container"><a class="navbar-brand text-primary js-scroll-trigger" href="/">PhishBuster</a><button
+                data-toggle="collapse" class="navbar-toggler navbar-toggler-right" data-target="#navbarResponsive"
+                type="button" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"
+                value="Menu"><i class="fa fa-bars"></i></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item nav-link js-scroll-trigger"><a class="nav-link active js-scroll-trigger"
+                            href="#home">Home</a></li>
+                    <li class="nav-item nav-link js-scroll-trigger"><a class="nav-link js-scroll-trigger"
+                            href="#about">About</a></li>
+                    <li class="nav-item nav-link js-scroll-trigger"><a class="nav-link js-scroll-trigger"
+                            href="#contribute">contribute</a></li>
+                    <li class="nav-item nav-link js-scroll-trigger"><a class="nav-link js-scroll-trigger"
+                            href="#contact">contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <body id="page-top">
+        <header class="masthead" id='home'
+            style="background: url({{ url_for('static', filename='assets/img/bg.jpg') }})">
+            <div class="intro-body">
+                <div class="container">
+                    <div class="row">
+
+                        {% block content %}{% endblock %}
+
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Counts Section -->
+        <section class="counts-section" id='counter'>
+            <!-- <h1 class="mx-auto d-table my-5 text-secondary">Our Achievement</h1> -->
+            <div class="bg-primary text-white py-5">
+                <div class="container">
+                    <div class="row">
+                        {% for c in counterdata %}
+                        <div class="col-lg-3 col-6 text-center">
+                            <h2 data-toggle="counterUp">{{c[1]}}</h2>
+                            <h6>{{c[0]}}</h6>  
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center content-section" id="about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <h2>About PhishBuster</h2>
+                        <p>It is an open source project on&nbsp;<a
+                                href="http://github.com/VFXGamer/PhishBuster">Github</a>.
+                            <br>Aim of the project is to reduce <a
+                                href="https://www.phishing.org/what-is-phishing">Phishing</a> victims.&nbsp;</a>
+                            <br>For more details visit my <a href="https://www.phishing.org/what-is-phishing">blog</a>
+                            to get more information about the project and tips to avoid getting phished.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center content-section" id="contribute"
+            style="background: url({{ url_for('static', filename='assets/img/bg.jpg') }})">
+            <div class="container">
+                <div class="col-md-10 mx-auto">
+                    <h1>Want to contribute</h1>
+                    <p>This is an <a href="https://opensource.com/resources/what-open-source">open source</a> project.
+                        Feel free to join us.<br>Click on <i>reports</i> and report them to google.
+                        <br>Thank You
+                    </p>
+                    <li class="list-inline-item">
+                        <a class="btn btn-primary btn-lg btn-default" role="button"
+                            href="http://github.com/VFXGamer/PhishBuster"><span class="network-name">Join Us</span></a>
+                        <a class="btn btn-primary btn-lg btn-default" role="button" href="/reports"><span
+                                class="network-name">reports</span></a>
+                    </li>
+                </div>
+            </div>
+        </section>
+        <section class="text-center content-section" id="contact" style="height: 451px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10 mx-auto">
+                        <h2>Contact us</h2>
+                        <p>If you have any queries or suggestions contact me on Twitter, feel free to connect with
+                            us.<br>
+                            If you found a bug don't forget to report it on Github issues tab.</p>
+                        <ul class="list-inline banner-social-buttons">
+                            <li class="list-inline-item"><a class="btn btn-primary btn-lg btn-default" role="button"
+                                    href="http://github.com/VFXGamer/PhishBuster"><i
+                                        class="fa fa-github fa-fw"></i><span
+                                        class="network-name">&nbsp;github</span></a>&nbsp;<a
+                                    class="btn btn-primary btn-lg btn-default" role="button"
+                                    href="https://twitter.com/VFXGamer_1"><i class="fa fa-twitter fa-fw"></i><span
+                                        class="network-name">&nbsp;Twitter</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="map-clean"></div>
+        <footer>
+            <div class="container text-center">
+                <p>Copyright ©VFXGamer 2021</p>
+            </div>
+        </footer>
+        <script type="text/javascript">
+            // jQuery counterUp
+            $('[data-toggle="counterUp"]').counterUp({
+                delay: 15,
+                time: 1500
+            });
+        </script>
+        <script src="{{ url_for('static', filename='assets/js/jquery.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='assets/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+        <script src="{{ url_for('static', filename='assets/js/grayscale.js') }}"></script>
+    </body>
+
+</html>
