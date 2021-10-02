@@ -1,0 +1,5 @@
+Flask==1.1.2
+Flask-Limiter==1.4
+tldextract==3.1.0
+flask-mysql
+gunicorn
