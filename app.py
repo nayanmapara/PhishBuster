@@ -88,10 +88,9 @@ def check():
                 phishing += 1
                 counter_data(total,phishing,safe_site,'w')
                 return redirect('/phishing') # Redirects to It is  PHISHING SITE
-            else:
-                safe_site += 1
-                counter_data(total,phishing,safe_site,'w')
-                return redirect('/safe') # Redirects to It is SAFE SITE
+            safe_site += 1
+            counter_data(total,phishing,safe_site,'w')
+            return redirect('/safe') # Redirects to It is SAFE SITE
         return redirect('/') # Redirects to home page if values are not entered
 
 # reports page
@@ -110,8 +109,8 @@ def reports():
         cursor.execute('SELECT * FROM reports_data') # '*' here is for id, orginal site and phising site
         db_output = cursor.fetchall()
         # converting to list to pass the data to html
-        report = list(db_output)
-        reported = report[-1][0]
+        report = list(db_output) if list(db_output) else []  
+        reported = report[-1][0] if report else 0  
         counter_data(total=total,phishing=phishing,safe_site=safe_site,reported=reported,mode='w')
         return render_template("reports.html",head=header,reports=report,counterdata=counter) # header for column names and reports for rows/site data
     except Exception as e:
@@ -171,13 +170,12 @@ def api():
                 counter_data(total,phishing,safe_site,'w')
                 mysqldata_insert(seurl,inurl) # To adding data to the database
                 return jsonify({'Input Url':inurl,'Orginal Url':seurl,'Phishing Site':output,'Data Saved':bool(store),'Region':country}) # API response with data saved information
-            else:
-                safe_site += 1
-                counter_data(total,phishing,safe_site,'w')
-                return jsonify({'Input Url':inurl,'Orginal Url':seurl,'Phishing Site':output,'Data Saved':bool(store),'Region':country}) # API response with data saved information
+            safe_site += 1
+            counter_data(total,phishing,safe_site,'w')
+            return jsonify({'Input Url':inurl,'Orginal Url':seurl,'Phishing Site':output,'Data Saved':bool(store),'Region':country}) # API response with data saved information
         return jsonify({'Input Url':inurl,'Orginal Url':seurl,'Phishing Site':output,'Region':country}) # API response if values are not saved
     return render_template('api.html') # Redirecting to reports page to show that changes were made successfully
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
