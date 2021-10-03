@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, redirect, jsonify
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import phishbuster as pb
+from dotenv import load_dotenv, find_dotenv
 from flaskext.mysql import MySQL
 import requests
 import os
@@ -10,10 +11,18 @@ app = Flask(__name__,template_folder='static')
 limiter = Limiter(app, key_func=get_remote_address) # Limiter setup for PhishBuster API
 mysql = MySQL()
 
-app.config['MYSQL_DATABASE_USER'] = os.environ['user']
-app.config['MYSQL_DATABASE_PASSWORD'] = os.environ['password']
-app.config['MYSQL_DATABASE_DB'] = os.environ['dbname']
-app.config['MYSQL_DATABASE_HOST'] = os.environ['servername']
+# Initializing the MySQL variables with .env file
+load_dotenv(find_dotenv())
+
+mysql_username = os.getenv('MYSQL_DATABASE_USER')
+mysql_password = os.getenv('MYSQL_DATABASE_PASSWORD')
+mysql_database = os.getenv('MYSQL_DATABASE_NAME')
+mysql_server = os.getenv('MYSQL_DATABASE_HOST')
+
+app.config['MYSQL_DATABASE_USER'] = mysql_username
+app.config['MYSQL_DATABASE_PASSWORD'] =mysql_password
+app.config['MYSQL_DATABASE_DB'] = mysql_database
+app.config['MYSQL_DATABASE_HOST'] = mysql_server
 
 mysql.init_app(app) 
 
