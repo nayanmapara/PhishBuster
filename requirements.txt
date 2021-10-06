@@ -3,3 +3,4 @@ Flask-Limiter==1.4
 tldextract==3.1.0
 flask-mysql
 gunicorn
+python-dotenv==0.19.0
