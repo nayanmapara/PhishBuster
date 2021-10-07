@@ -16,11 +16,11 @@ For more details visit our [Blog](http://blog.cybervfx.tech/2021/06/phishbuster.
 
 ![home](https://user-images.githubusercontent.com/62838631/135703689-ff5cc34a-da02-42b7-8962-bce8abd1db49.jpg)
 
-2. You can manually add phishing sites in <a href="https://127.0.0.1:5000/reports">/reports</a>, click on add button to manually add phishing site.
+2. You can manually add phishing sites in [**reports**], click on add button to manually add phishing site.
 
 ![Manualadd](https://user-images.githubusercontent.com/62838631/135703691-d20235cc-cf45-4c92-bd1b-03fcf70d39ff.jpg)
 
-3. You can go to **CONTRIBUTE** section and click on **reports** to see the list of all the phishing urls saved from the scans and manual add.
+3. You can go to **CONTRIBUTE** section and click on [**reports**] to see the list of all the phishing urls saved from the scans and manual add.
 
 ![contribute](https://user-images.githubusercontent.com/62838631/120368102-4b59fd00-c32f-11eb-978f-8dbffde01b61.png)
 
@@ -39,3 +39,9 @@ Send a **POST** request to [PhishBuster Site](https://127.0.0.1:500/api/) and ad
 3. You will receive a *json* output with 5 fields *check-url*, *Original Url*, *Phishing Site* (boolean output), *country* and *save-scan-data*.
 
 ### Aim of the project is to reduce phishing victims. 😇
+---
+## License
+
+Distributed under the MIT License. See [LICENSE](/LICENSE) for more information.
+
+[**reports**]: https://phishbuster-web.herokuapp.com/reports
