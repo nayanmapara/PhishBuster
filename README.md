@@ -29,7 +29,7 @@ For more details visit our [Blog](http://blog.cybervfx.tech/2021/06/phishbuster.
 ![reports](https://user-images.githubusercontent.com/62838631/135703692-0698eaa8-4903-4946-87c4-870e3b960f0f.jpg)
 
 ### PhishBuster API
-Send a **POST** request to [PhishBuster Site](https://127.0.0.1:500/api/) and add *suspected link*, add the *site it is trying to refer to*, *your country* and *to store* the website URL if it is found to be a phishing site.<br>
+Send a **POST** request to [PhishBuster Site](https://phishbuster-web.herokuapp.com/api/) and add *suspected link*, add the *site it is trying to refer to*, *your country* and *to store* the website URL if it is found to be a phishing site.<br>
 
 **NOTE: You can use the following file** `call_api.py` **and send API request to the site.**
 
