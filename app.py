@@ -16,7 +16,7 @@ load_dotenv(find_dotenv())
 
 mysql_username = os.getenv('MYSQL_DATABASE_USER')
 mysql_password = os.getenv('MYSQL_DATABASE_PASSWORD')
-mysql_database = os.getenv('MYSQL_DATABASE_NAME')
+mysql_database = os.getenv('MYSQL_DATABASE_DB')
 mysql_server = os.getenv('MYSQL_DATABASE_HOST')
 
 app.config['MYSQL_DATABASE_USER'] = mysql_username
