@@ -89,7 +89,7 @@ def check():
         seurl = req['seurl'] # Storing url from drop down menu in a variable
         country = req['country'] # Storing country's iso code in a variable
         inurl = inurl.lower() # Converting input url to lower case to avoid errors
-        if inurl != '' and seurl != 'select' and country != 'select':
+        if inurl != '' and seurl != 'select' :
             total += 1
             output = pb.comparing_url(inurl,seurl,country) # Returns 'True' if it is a phishing site or 'False' if it is a safe site
             if output is True:
