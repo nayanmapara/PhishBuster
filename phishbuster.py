@@ -42,7 +42,7 @@ def phishbuster_url(url_input): # removes ~@ (which are used for disgusing the u
         domain_url = domain
     return domain_url # returns a domain name eg. google.com / with sub domain www.google.com
 
-def comparing_url(url_phish,url_org,country):
+def comparing_url(url_phish,url_org,country="com"):
     input_url = phishbuster_url(url_phish) # removing path and hinding characters from the url
     final_url = subdomain_re(input_url) # removing sub domain from the url
     regional = tldextract.extract(url_org).domain +'.'+ country.lower() # adding country to the url
