@@ -34,10 +34,8 @@ def counter_data(total,phishing,safe_site,reported,mode='r'):
     if mode == 'w':
         with open('counter_data.txt','w') as w_count:
             w_count.write(f"{total} {phishing} {safe_site} {reported}")
-    else:
-        with open('counter_data.txt') as r_count:
-            data_read = [r_count.read().split(' ')]
-        return data_read
+            w_count.flush()
+    return True
 
 def mysqldata_insert(seurl,inurl): # For appending values to reports_data table
     try:
@@ -52,12 +50,16 @@ def mysqldata_insert(seurl,inurl): # For appending values to reports_data table
 
 @app.route("/") # index page
 def index():
-    for i in counter_data(total=total,phishing=phishing,safe_site=safe_site,reported=reported):
-        total_scanned = int(i[0])
-        phishing_sites = int(i[1])
-        safe_sites = int(i[2])
-        reported_sites = int(i[3])
+    # for i in counter_data(total=total,phishing=phishing,safe_site=safe_site,reported=reported):
+    #     total_scanned = int(i[0])
+    #     phishing_sites = int(i[1])
+    #     safe_sites = int(i[2])
+    #     reported_sites = int(i[3])
+    with open('counter_data.txt') as file:
+        total_scanned,phishing_sites,safe_sites,reported_sites=(file.read()).split()
+
     counter = [['Sites Scanned',total_scanned],['Safe Sites',safe_sites],['Phishing Sites',phishing_sites],['Sites Reported',reported_sites]]
+
     try:
         connect = mysql.connect() # for connecting to the database
         cursor = connect.cursor() # cursor to execute mysql queries
@@ -71,11 +73,13 @@ def index():
         lis2 = list(db_output2) # converting tuple to list
         lis2.sort() # sorting the list
         countrydata = [["SELECT YOUR COUNTRY","select"]]+lis2 # appending the list to the list
+
         return render_template("index.html",selecturl=selecturl,countrydata=countrydata,counterdata=counter) # selecturl sends list containing list of real sites
     except Exception as e:
         print(e)
         selecturl = [["Error Occured","select"]] # if error occured while fetching data from the database
         countrydata = [["Error Occured","select"]] # if error occured while fetching data from the database
+
         return render_template("index.html",selecturl=selecturl,countrydata=countrydata,counterdata=counter) # selecturl sends error as it failed to get data from the database
     return redirect('/')
 
@@ -95,10 +99,12 @@ def check():
             if output is True:
                 mysqldata_insert(seurl,inurl) # For appending data if it is a phising site
                 phishing += 1
-                counter_data(total,phishing,safe_site,'w')
+                counter_data(total,phishing,safe_site,reported,'w')
+                print('Updated')
                 return redirect('/phishing') # Redirects to It is  PHISHING SITE
             safe_site += 1
-            counter_data(total,phishing,safe_site,'w')
+            counter_data(total,phishing,safe_site,reported,'w')
+
             return redirect('/safe') # Redirects to It is SAFE SITE
         return redirect('/') # Redirects to home page if values are not entered
 
@@ -107,11 +113,12 @@ def check():
 def reports():
     global reported
     try:
-        for i in counter_data(total=total,phishing=phishing,safe_site=safe_site,reported=reported):
-            total_scanned = int(i[0])
-            phishing_sites = int(i[1])
-            safe_sites = int(i[2])
-            reported_sites = int(i[3])
+        with open('counter_data.txt') as file:
+            total_scanned, phishing_sites, safe_sites, reported_sites = (file.read()).split()
+
+        counter = [['Sites Scanned', total_scanned], ['Safe Sites', safe_sites], ['Phishing Sites', phishing_sites],
+                   ['Sites Reported', reported_sites]]
+
         counter = [['Sites Scanned',total_scanned],['Safe Sites',safe_sites],['Phishing Sites',phishing_sites],['Sites Reported',reported_sites]]
         connect = mysql.connect() # for connecting to the database
         cursor = connect.cursor() # cursor to execute mysql queries
@@ -121,6 +128,7 @@ def reports():
         report = list(db_output) if list(db_output) else []  
         reported = report[-1][0] if report else 0  
         counter_data(total=total,phishing=phishing,safe_site=safe_site,reported=reported,mode='w')
+
         return render_template("reports.html",head=header,reports=report,counterdata=counter) # header for column names and reports for rows/site data
     except Exception as e:
         print(e)
@@ -176,11 +184,12 @@ def api():
         if store == 'True': # String as the input can be made to anything and to overcoming error if the input is coverted to boolean before filtering
             if output is True:
                 phishing += 1
-                counter_data(total,phishing,safe_site,'w')
+                counter_data(total,phishing,safe_site,reported,'w')
                 mysqldata_insert(seurl,inurl) # To adding data to the database
                 return jsonify({'Input Url':inurl,'Orginal Url':seurl,'Phishing Site':output,'Data Saved':bool(store),'Region':country}) # API response with data saved information
             safe_site += 1
-            counter_data(total,phishing,safe_site,'w')
+            counter_data(total,phishing,safe_site,reported,'w')
+
             return jsonify({'Input Url':inurl,'Orginal Url':seurl,'Phishing Site':output,'Data Saved':bool(store),'Region':country}) # API response with data saved information
         return jsonify({'Input Url':inurl,'Orginal Url':seurl,'Phishing Site':output,'Region':country}) # API response if values are not saved
     return render_template('api.html') # Redirecting to reports page to show that changes were made successfully
