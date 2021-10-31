@@ -2,7 +2,6 @@ from flask import Flask, request, render_template, redirect, jsonify
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import phishbuster as pb
-from dotenv import load_dotenv, find_dotenv
 from flaskext.mysql import MySQL
 import requests
 import os
@@ -11,24 +10,19 @@ app = Flask(__name__,template_folder='static')
 limiter = Limiter(app, key_func=get_remote_address) # Limiter setup for PhishBuster API
 mysql = MySQL()
 
-# Initializing the MySQL variables with .env file
-load_dotenv(find_dotenv())
-
-mysql_username = os.getenv('MYSQL_DATABASE_USER')
-mysql_password = os.getenv('MYSQL_DATABASE_PASSWORD')
-mysql_database = os.getenv('MYSQL_DATABASE_DB')
-mysql_server = os.getenv('MYSQL_DATABASE_HOST')
-
-app.config['MYSQL_DATABASE_USER'] = mysql_username
-app.config['MYSQL_DATABASE_PASSWORD'] =mysql_password
-app.config['MYSQL_DATABASE_DB'] = mysql_database
-app.config['MYSQL_DATABASE_HOST'] = mysql_server
+app.config['MYSQL_DATABASE_USER'] = os.environ['user']
+app.config['MYSQL_DATABASE_PASSWORD'] = os.environ['password']
+app.config['MYSQL_DATABASE_DB'] = os.environ['dbname']
+app.config['MYSQL_DATABASE_HOST'] = os.environ['servername']
 
 mysql.init_app(app) 
 
 header = ['Sr No.', 'Orginal Site', 'Phishing Site','Action'] # Header for reports table
 
 total,phishing,safe_site,reported = 0,0,0,0
+
+# Stores url of site after scan if safe
+redirect_url = ""
 
 def counter_data(total,phishing,safe_site,reported,mode='r'):
     if mode == 'w':
@@ -82,7 +76,7 @@ def index():
 # For getting values from index and passing them to PhishBuster
 @app.route('/check', methods=["GET","POST"])
 def check():
-    global total,phishing,safe_site
+    global total,phishing,safe_site,redirect_url
     if request.method == "POST":
         req = request.form 
         inurl = req['inurl'] # Storing input url in a variable
@@ -96,9 +90,10 @@ def check():
                 mysqldata_insert(seurl,inurl) # For appending data if it is a phising site
                 phishing += 1
                 counter_data(total,phishing,safe_site,'w')
-                return redirect('/phishing') # Redirects to It is  PHISHING SITE
+                return redirect('/phishing') # Redirects to It is PHISHING SITE
             safe_site += 1
             counter_data(total,phishing,safe_site,'w')
+            redirect_url = inurl # Sets url to redirect
             return redirect('/safe') # Redirects to It is SAFE SITE
         return redirect('/') # Redirects to home page if values are not entered
 
@@ -133,12 +128,19 @@ def reports():
 def phish():
     return render_template("phish.html")
 
+# Accepts post request and redirects to safe site when visit button is clicked
+@app.route("/turn", methods=["GET","POST"])
+def turn():
+    if request.method == "POST":
+        return redirect(pb.url_syntax(redirect_url))
+    return redirect("/safe")
+
 # safe label page
 @app.route("/safe")
 def safe():
     return render_template("safe.html")
 
-# For deleteing a desired row   
+# For deleteing a desired row
 @app.route('/delete/<id>/')
 def delete(id):
     connect = mysql.connect() # for connecting to the database
@@ -187,4 +189,4 @@ def api():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
