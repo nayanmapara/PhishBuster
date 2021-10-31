@@ -3,5 +3,8 @@
 <div class="col">
     <h1 class='display-4'>It is a <a href="https://www.phishing.org/what-is-phishing">safe</a> site</h1>
     <p>Click <a href="/">here</a> to return to home.</p>
+    <form action={{url_for('turn')}} method="POST">
+        <button type="submit" class="btn btn-primary btn-lg btn-default">Visit scanned site</button>
+    </form>
 </div>
 {% endblock %}
