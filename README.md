@@ -1,9 +1,11 @@
 ![PhishBuster](https://user-images.githubusercontent.com/62838631/125227704-042d3780-e2f1-11eb-8f09-90ecd521f617.png)
 <div align='center'>
-<a href="https://www.codefactor.io/repository/github/vfxgamer/phishbuster"><img src="https://www.codefactor.io/repository/github/vfxgamer/phishbuster/badge" alt="CodeFactor" height="25"/></a>
+<a href="https://www.codefactor.io/repository/github/nayanm9/phishbuster"><img src="https://www.codefactor.io/repository/github/nayanm9/phishbuster/badge" alt="CodeFactor" height="25"/></a>
 <img src="https://img.shields.io/github/languages/code-size/VFXGamer/PhishBuster?style=for-the-badge" alt="GitHub code size in bytes" height="25"/></a>
 <img src="https://img.shields.io/github/contributors/VFXGamer/PhishBuster?style=for-the-badge" alt="GitHub contributors" height="25"/></a>
+<!--
 <a href="https://deepsource.io/gh/VFXGamer/PhishBuster/?ref=repository-badge"><img src="https://deepsource.io/gh/VFXGamer/PhishBuster.svg/?label=active+issues&show_trend=true" alt="DeepSource" height="25"/></a>
+-->
 </div>
 
 ## Sites:
