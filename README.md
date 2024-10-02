@@ -1,3 +1,7 @@
+> [!Important]  
+> This project has been archived. We sincerely thank you for your contributions and support.
+>
+
 ![PhishBuster](https://user-images.githubusercontent.com/62838631/125227704-042d3780-e2f1-11eb-8f09-90ecd521f617.png)
 <div align='center'>
 <a href="https://www.codefactor.io/repository/github/nayanm9/phishbuster"><img src="https://www.codefactor.io/repository/github/nayanm9/phishbuster/badge" alt="CodeFactor" height="25"/></a>
